@@ -1,0 +1,33 @@
+zabbix_export:
+  version: '5.2'
+  date: '2023-05-12T12:07:43Z'
+  groups:
+    -
+      name: Templates
+  templates:
+    -
+      template: 'RabbitMQqueue descovery'
+      name: 'RabbitMQqueue descovery'
+      groups:
+        -
+          name: Templates
+      applications:
+        -
+          name: Queue
+      discovery_rules:
+        -
+          name: 'Descover queue'
+          key: queue.name
+          item_prototypes:
+            -
+              name: 'Queue name {#QUEUENAME}'
+              key: 'get.massage.count[{#QUEUENAME}]'
+              delay: 20m
+              applications:
+                -
+                  name: Queue
+              trigger_prototypes:
+                -
+                  expression: '{last()}>10 and {change()}=0'
+                  name: 'Queue  {#QUEUENAME} is stuck'
+                  priority: HIGH
