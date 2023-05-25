@@ -10,7 +10,7 @@ $ListQueue = Get-RabbitMQQueue -BaseUri http://82.200.207.108:15672/ -Credential
 
 
 
-$Queue = $ListQueue | select @{N='{#QUEUENAME}'; E={$_.Name}}
+$Queue = $ListQueue | Select-Object @{N='{#QUEUENAME}'; E={$_.Name}}
 $json = convertto-json $Queue
 
 write-host "{"
